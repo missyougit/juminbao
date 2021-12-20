@@ -288,7 +288,7 @@
 				    }
 				});
 			},
-			
+	
 			// 获取输入的电话号码
 			getPhone(e){
 				let {value} = e.detail;

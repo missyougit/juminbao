@@ -12,10 +12,6 @@
 }
 .beizhu_key{
 	
-	display: -webkit-box;
-	
-	display: -webkit-flex;
-	
 	display: flex;
 	width: 100%;
 	margin: 0 20rpx;
@@ -25,10 +21,6 @@
 }
 .beizhu_value{
 	
-	display: -webkit-box;
-	
-	display: -webkit-flex;
-	
 	display: flex;
 	width: 100%;
 	margin: 0 20rpx;
@@ -36,26 +28,13 @@
 	border-radius: 0 0 10rpx 10rpx;
 }
 .tianjia{
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	-webkit-flex-direction: column;
-	        flex-direction: column;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 	margin: 0 20rpx;
 }
 .bianhao{
-	
-	display: -webkit-box;
-	
-	display: -webkit-flex;
 	
 	display: flex;
 	width: 100%;
@@ -65,35 +44,17 @@
 	border-radius: 10rpx;
 }
 .bianhao_key{
-	-webkit-box-flex: 1;
-	-webkit-flex: 1;
-	        flex: 1;
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	-webkit-flex-direction: column;
-	        flex-direction: column;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
+	flex: 1;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 	margin: 20rpx;
 }
 .bianhao_value{
-	-webkit-box-flex: 5;
-	-webkit-flex: 5;
-	        flex: 5;
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	-webkit-flex-direction: column;
-	        flex-direction: column;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
+	flex: 5;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 	margin: 20rpx;
 }
 .beizhu{
