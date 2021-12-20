@@ -1,0 +1,35 @@
+{
+  "pages": [
+    "pages/tabs/huiyuan_list",
+    "pages/logon/logon",
+    "pages/tabs/add_huiyuan",
+    "pages/tabs/details/huiyuandetails",
+    "pages/tabs/details/update_huiyuan"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "#FFF5EE",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "text": "会员列表",
+        "pagePath": "pages/tabs/huiyuan_list",
+        "iconPath": "static/icons/huiyuanlist.png",
+        "selectedIconPath": "static/icons/huiyuanlist_list.png"
+      },
+      {
+        "text": "添加会员",
+        "pagePath": "pages/tabs/add_huiyuan",
+        "iconPath": "static/icons/jiahao.png",
+        "selectedIconPath": "static/icons/jiahao_full.png"
+      }
+    ],
+    "backgroundColor": "#FFF5EE",
+    "selectedColor": "#000000",
+    "color": "#999999"
+  },
+  "usingComponents": {}
+}

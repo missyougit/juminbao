@@ -1,0 +1,1 @@
+<view class="content"><image class="beijing" src="{{imageUrl}}"></image><view data-event-opts="{{[['tap',[['wechatLogon',['$event']]]]]}}" class="wechat_logon" bindtap="__e"><text style="color:#F8F8F8;">登录</text></view></view>

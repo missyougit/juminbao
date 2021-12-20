@@ -1,0 +1,64 @@
+{
+	"pages": [
+		{
+			"path": "pages/tabs/huiyuan_list",
+			"style": {
+				"navigationBarTitleText": "会员列表",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/logon/logon",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationBarBackgroundColor": "#F8F8F8"
+			}
+		},
+		{
+			"path": "pages/tabs/add_huiyuan",
+			"style": {
+				"navigationBarTitleText": "添加会员"
+			}
+		},
+		{
+			"path": "pages/tabs/details/huiyuandetails",
+			"style": {
+				"navigationBarTitleText": "会员详情"
+			}
+		},
+		{
+			"path": "pages/tabs/details/update_huiyuan",
+			"style": {
+				"navigationBarTitleText": "修改会员信息",
+				"app-plus": {
+					"animationType":"fade-in"
+				}
+			}
+		}
+		
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarBackgroundColor": "#FFF5EE",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"list": [
+			{
+				"text":"会员列表",
+				"pagePath":"pages/tabs/huiyuan_list",
+				"iconPath":"static/icons/huiyuanlist.png",
+				"selectedIconPath":"static/icons/huiyuanlist_list.png"
+			},
+			{
+				"text":"添加会员",
+				"pagePath":"pages/tabs/add_huiyuan",
+				"iconPath":"static/icons/jiahao.png",
+				"selectedIconPath":"static/icons/jiahao_full.png"
+			}
+		],
+		"backgroundColor":"#FFF5EE",
+		"selectedColor":"#000000",
+		"color":"#999999"
+	}
+}
