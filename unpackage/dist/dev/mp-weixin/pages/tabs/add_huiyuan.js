@@ -97,6 +97,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  if (!_vm._isMounted) {
+    _vm.e0 = function($event) {
+      _vm.showPicker = true
+    }
+  }
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -130,88 +135,92 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var MxDatePicker = function MxDatePicker() {__webpack_require__.e(/*! require.ensure | components/mx-datepicker/mx-datepicker */ "components/mx-datepicker/mx-datepicker").then((function () {return resolve(__webpack_require__(/*! ../../components/mx-datepicker/mx-datepicker.vue */ 52));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {
+  components: {
+    MxDatePicker: MxDatePicker },
+
   data: function data() {
     var currentDate = this.getDate({
       format: true });
@@ -227,37 +236,28 @@ var _default =
       remarks: '',
       zhiye: '',
       openId: '',
-      address: '' };
+      address: '',
+      showPicker: false };
 
   },
 
   onLoad: function onLoad(option) {},
 
   onShow: function onShow() {
-
-
-
-
-
-
-    this.openId = uni.getStorageSync("openId");
-
-
+    this.yuangongid = uni.getStorageSync("yuangongid");
   },
 
-  computed: {
-    startDate: function startDate() {
-      return this.getDate('start');
-    },
-    endDate: function endDate() {
-      return this.getDate('end');
-    } },
-
-
   methods: {
+    onSelected: function onSelected(e) {//选择
+      this.showPicker = false;
+      if (e) {var
+        value = e.value;
+        this.birthday = value.replace(/\//g, "-");
+      }
+    },
     /**
-              * 验证是否为手机号码（移动手机）
-              */
+        * 验证是否为手机号码（移动手机）
+        */
     isMobilePhone: function isMobilePhone(source) {
       var regex = /^[1][3,4,5,7,8][0-9]{9}$/;
       return regex.test(source);
@@ -265,24 +265,18 @@ var _default =
     // 添加会员
     addHuiyuan: function addHuiyuan() {var _this = this;
 
-      console.log("----", this.openId);
-
-      if (this.openId == null || this.openId == '') {
-        console.log("--00000--", this.openId);
-        uni.navigateTo({
-          url: '../logon/logon',
-          success: function success() {
-            console.log("switchTab-->", _this.openId);
-            uni.showToast({
-              title: "您还没有登录",
-              icon: 'none' });
-
-
-          } });
-
-
-        // return;
-      }
+      // if(this.openId==null || this.openId==''){
+      // 	console.log("--00000--",this.openId)
+      // 	uni.navigateTo({
+      // 		url: '../logon/logon',
+      // 		success: () => {
+      // 			uni.showToast({
+      // 			    title: "您还没有登录",
+      // 				icon: 'none'
+      // 			});
+      // 		}
+      // 	});
+      // }
       // 电话号码不能为空
       if (this.phone == null || this.phone == '') {
         uni.showToast({
@@ -321,6 +315,8 @@ var _default =
 
         return;
       }
+      uni.showLoading({
+        title: '加载中' });
 
       var huiyuan = {
         name: this.name,
@@ -333,7 +329,6 @@ var _default =
         openId: this.openId,
         address: this.address };
 
-
       uni.request({
         url: this.baseUrl + '/huiyuan/addHuiyuan',
         method: 'POST',
@@ -342,22 +337,16 @@ var _default =
           status = res.data.status;var
           message = res.data.message;
           if (status == 200) {
-            uni.showLoading({
-              title: '加载中' });
+            _this.name = '';
+            _this.phone = '';
+            var currentDate = _this.getDate({
+              format: true });
 
+            _this.birthday = currentDate;
+            _this.remarks = '';
+            _this.address = '';
             uni.switchTab({
-              url: './huiyuan_list',
-              success: function success() {
-                _this.name = '';
-                _this.phone = '';
-                var currentDate = _this.getDate({
-                  format: true });
-
-                _this.birthday = currentDate;
-                _this.remarks = '';
-                _this.address = '';
-                uni.hideLoading();
-              } });
+              url: './huiyuan_list' });
 
           } else {
             uni.showToast({
@@ -366,7 +355,7 @@ var _default =
               icon: 'none' });
 
           }
-
+          uni.hideLoading();
         } });
 
 
@@ -384,15 +373,7 @@ var _default =
     },
     // 区分男女
     getGender: function getGender(e) {
-      console.log(e);
-      // let {value} = e.detail;
       this.gender = e.detail.value;
-      // if(value == 1){
-      // 	this.gender = '男';
-      // }
-      // if(value == 0){
-      // 	this.gender = '女';
-      // }
     },
     // 获取姓名
     getname: function getname(e) {var
@@ -410,10 +391,6 @@ var _default =
       value = e.detail.value;
       this.address = value.replace(/\s/g, "");
     },
-    bindDateChange: function bindDateChange(e) {
-      this.birthday = e.target.value;
-    },
-
     getDate: function getDate(type) {
 
       var date = new Date();

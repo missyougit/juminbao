@@ -2,7 +2,7 @@
 	
 	<view class="content">
 		<image class="beijing" :src="imageUrl"></image>
-		<!-- <image class="logo" src="../../static/images/dengjumin.jpg"></image>
+		<image class="logo" src="../../static/images/dengjumin.jpg"></image>
 		<view class="text-area">
 			<view class="phone-pwd">
 				<input @input="getPhone" class="dianhua_mima" type="text" :value="phone" placeholder="请输入电话号码"/>
@@ -27,12 +27,12 @@
 			<view v-else @click="isLogon=!isLogon" class="hengxian">
 				<text>------------<text class="zhuce" space="nbsp">- 登录 -</text>------------</text>
 			</view>
-		</view> -->
-		
-		
-		<view class="wechat_logon" @click="wechatLogon">
-			<text style="color: #F8F8F8;">登录</text>
 		</view>
+		
+		
+		<!-- <view class="wechat_logon" @click="wechatLogon">
+			<text style="color: #F8F8F8;">登录</text>
+		</view> -->
 		
 	</view>
 
@@ -44,10 +44,10 @@
 			const baseUrl = getApp().globalData.baseUrl;
 			return {
 				baseUrl: baseUrl,
-				// phone: '',
-				// password: '',
-				phone: '13551266914',
-				password: '123456',
+				phone: '',
+				password: '',
+				// phone: '13551266914',
+				// password: '123456',
 				confirmPassword: '',
 				isLogon: true,
 				imageUrl: '../../static/images/shouye.jpg'

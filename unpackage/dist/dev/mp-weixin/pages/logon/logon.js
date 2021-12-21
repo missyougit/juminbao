@@ -105,6 +105,15 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  if (!_vm._isMounted) {
+    _vm.e0 = function($event) {
+      _vm.isLogon = !_vm.isLogon
+    }
+
+    _vm.e1 = function($event) {
+      _vm.isLogon = !_vm.isLogon
+    }
+  }
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -182,10 +191,10 @@ var _default =
     var baseUrl = getApp().globalData.baseUrl;
     return {
       baseUrl: baseUrl,
-      // phone: '',
-      // password: '',
-      phone: '13551266914',
-      password: '123456',
+      phone: '',
+      password: '',
+      // phone: '13551266914',
+      // password: '123456',
       confirmPassword: '',
       isLogon: true,
       imageUrl: '../../static/images/shouye.jpg' };

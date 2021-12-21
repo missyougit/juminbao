@@ -37,9 +37,8 @@
 				<text>生日:</text>
 			</view>
 			<view class="bianhao_value">
-				<picker mode="date" :value="birthday" :start="startDate" :end="endDate" @change="bindDateChange">
-				    <view class="uni-input">{{birthday}}</view>
-				</picker>
+				<view @click="showPicker = true">{{birthday}}</view>
+				<mx-date-picker :show="showPicker" type="date" :value="birthday" :show-tips="true" @confirm="onSelected" @cancel="onSelected" />
 			</view>
 		</view>
 		<view class="bianhao">
@@ -50,7 +49,7 @@
 				<input type="text" @input="getPhone" :value="phone" maxlength="11" placeholder="请输入电话号码" placeholder-style="color:#C0C0C0"/>
 			</view>
 		</view>
-		<view class="bianhao">
+		<view class="bianhao"> 
 			<view class="bianhao_key">
 				<text>地址:</text>
 			</view>
@@ -79,7 +78,12 @@
 </template>
 
 <script>
+	import MxDatePicker from "../../components/mx-datepicker/mx-datepicker.vue";
+	
 	export default {
+		components: {
+			MxDatePicker
+		},
 		data() {
 			const currentDate = this.getDate({
 			    format: true
@@ -95,34 +99,25 @@
 				remarks: '',
 				zhiye: '',
 				openId: '',
-				address: ''
+				address: '',
+				showPicker: false
 			}
 		},
 		
 		onLoad(option) {},
 		
 		onShow() {
-			
-			// #ifdef APP-PLUS
 			this.yuangongid = uni.getStorageSync("yuangongid");
-			// #endif
-			
-			// #ifdef MP-WEIXIN
-			this.openId = uni.getStorageSync("openId");
-			// #endif
-			
-		},
-		
-		computed: {
-		    startDate() {
-		        return this.getDate('start');
-		    },
-		    endDate() {
-		        return this.getDate('end');
-		    }
 		},
 		
 		methods: {
+			onSelected(e) {//选择
+				this.showPicker = false;
+				if(e){
+					let {value} = e;
+					this.birthday = value.replace(/\//g,"-");
+				}
+			},
 			/**
 			 * 验证是否为手机号码（移动手机）
 			 */
@@ -133,24 +128,18 @@
 			// 添加会员
 			addHuiyuan(){
 			
-				console.log("----",this.openId)
-			
-				if(this.openId==null || this.openId==''){
-					console.log("--00000--",this.openId)
-					uni.navigateTo({
-						url: '../logon/logon',
-						success: () => {
-							console.log("switchTab-->",this.openId)
-							uni.showToast({
-							    title: "您还没有登录",
-								icon: 'none'
-							});
-							
-						}
-					});
-					
-					// return;
-				}
+				// if(this.openId==null || this.openId==''){
+				// 	console.log("--00000--",this.openId)
+				// 	uni.navigateTo({
+				// 		url: '../logon/logon',
+				// 		success: () => {
+				// 			uni.showToast({
+				// 			    title: "您还没有登录",
+				// 				icon: 'none'
+				// 			});
+				// 		}
+				// 	});
+				// }
 				// 电话号码不能为空
 				if(this.phone==null || this.phone==''){
 					uni.showToast({
@@ -189,7 +178,9 @@
 					});
 					return;
 				}
-				
+				uni.showLoading({
+				    title: '加载中'
+				});
 				let huiyuan = {
 					name:this.name,
 					gender:this.gender,
@@ -201,7 +192,6 @@
 					openId:this.openId,
 					address:this.address
 				};
-				
 				uni.request({
 				    url: this.baseUrl+'/huiyuan/addHuiyuan',
 					method: 'POST',
@@ -210,22 +200,16 @@
 						let {status} = res.data;
 						let {message} = res.data;
 						if(status==200){
-							uni.showLoading({
-							    title: '加载中'
-							});
+							this.name = '';
+							this.phone = '';
+							const currentDate = this.getDate({
+							    format: true
+							})
+							this.birthday = currentDate;
+							this.remarks = '';
+							this.address = '';
 							uni.switchTab({
-								url: './huiyuan_list',
-								success: () => {
-									this.name = '';
-									this.phone = '';
-									const currentDate = this.getDate({
-									    format: true
-									})
-									this.birthday = currentDate;
-									this.remarks = '';
-									this.address = '';
-									uni.hideLoading();
-								}
+								url: './huiyuan_list'
 							});
 						}else{
 							uni.showToast({
@@ -234,7 +218,7 @@
 								icon: 'none'
 							});
 						}
-						
+						uni.hideLoading();
 				    }
 				});
 				
@@ -252,15 +236,7 @@
 			},
 			// 区分男女
 			getGender(e){
-				console.log(e)
-				// let {value} = e.detail;
 				this.gender = e.detail.value;
-				// if(value == 1){
-				// 	this.gender = '男';
-				// }
-				// if(value == 0){
-				// 	this.gender = '女';
-				// }
 			},
 			// 获取姓名
 			getname(e){
@@ -277,11 +253,7 @@
 			getAddress(e){
 				let {value} = e.detail;
 				this.address = value.replace(/\s/g,"");
-			},
-			bindDateChange: function(e) {
-			    this.birthday = e.target.value
-			},
-			
+			},			
 			getDate(type) {
 				
 			    const date = new Date();

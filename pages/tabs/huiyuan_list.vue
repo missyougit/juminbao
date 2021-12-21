@@ -55,14 +55,9 @@
 		},
 
 		onLoad(option) {
-			// #ifdef APP-PLUS
+			
 			this.yuangongid = uni.getStorageSync("yuangongid");
 			let url = this.baseUrl+'/huiyuan/by/'+this.yuangongid+"?pageNo=1&pageSize="+this.pageSize;
-			// #endif
-			// #ifdef MP-WEIXIN
-			this.openId = uni.getStorageSync("openId");
-			let url = this.baseUrl+'/huiyuan/wechat/'+this.openId+"?pageNo=1&pageSize="+this.pageSize;
-			// #endif
 	
 			uni.request({
 			    url: url,
@@ -85,48 +80,44 @@
 		},
 	
 		onShow() {
-			
-			if(this.huiyuan_list==null || this.huiyuan_list=='' || this.huiyuan_list.length==0){
+			// if(this.huiyuan_list==null || this.huiyuan_list=='' || this.huiyuan_list.length==0){
 				
-				// #ifdef APP-PLUS
-				this.yuangongid = uni.getStorageSync("yuangongid");
-				let url = this.baseUrl+'/huiyuan/by/'+this.yuangongid+"?pageNo=1&pageSize="+this.pageSize;
-				// #endif
-				// #ifdef MP-WEIXIN
-				this.openId = uni.getStorageSync("openId");
-				let url = this.baseUrl+'/huiyuan/wechat/'+this.openId+"?pageNo=1&pageSize="+this.pageSize;
-				// #endif
+			// 	//// #ifdef APP-PLUS
+			// 	this.yuangongid = uni.getStorageSync("yuangongid");
+			// 	let url = this.baseUrl+'/huiyuan/by/'+this.yuangongid+"?pageNo=1&pageSize="+this.pageSize;
+			// 	// // #endif
+			// 	// // #ifdef MP-WEIXIN
+			// 	// this.openId = uni.getStorageSync("openId");
+			// 	// let url = this.baseUrl+'/huiyuan/wechat/'+this.openId+"?pageNo=1&pageSize="+this.pageSize;
+			// 	// // #endif
 					
-				uni.request({
-				    url: url,
-				    success: (res) => {
-						console.log("res=>",res)
-						let {status,message,result} = res.data;
-						if(status==200){
-							this.huiyuan_list = result.huiyuanList;
-							this.pageCount = result.pageCount;
-							this.total = result.total;
-						}else{
-							uni.showToast({
-							    title: message,
-							    duration: 1000,
-								icon: 'none'
-							});
-						}
-				    }
-				});
+			// 	uni.request({
+			// 	    url: url,
+			// 	    success: (res) => {
+			// 			console.log("res=>",res)
+			// 			let {status,message,result} = res.data;
+			// 			if(status==200){
+			// 				this.huiyuan_list = result.huiyuanList;
+			// 				this.pageCount = result.pageCount;
+			// 				this.total = result.total;
+			// 			}else{
+			// 				uni.showToast({
+			// 				    title: message,
+			// 				    duration: 1000,
+			// 					icon: 'none'
+			// 				});
+			// 			}
+			// 	    }
+			// 	});
 				
-			}
+			// }
 			
 		},
 
 		onPullDownRefresh() {
-			// #ifdef APP-PLUS
+			
 			let url = this.baseUrl+'/huiyuan/by/'+this.yuangongid+"?pageNo=1&pageSize="+this.pageSize;
-			// #endif
-			// #ifdef MP-WEIXIN
-			let url = this.baseUrl+'/huiyuan/wechat/'+this.openId+"?pageNo=1&pageSize="+this.pageSize;
-			// #endif
+
 			uni.request({
 			    url: url,
 			    success: (res) => {
@@ -150,12 +141,9 @@
 		
 		onReachBottom(){
 			if(this.pageNo <= this.pageCount){
-				// #ifdef APP-PLUS
+
 				let url = this.baseUrl+'/huiyuan/by/'+this.yuangongid+"?pageNo="+this.pageNo+"&pageSize="+this.pageSize;
-				// #endif
-				// #ifdef MP-WEIXIN
-				let url = this.baseUrl+'/huiyuan/wechat/'+this.openId+"?pageNo="+this.pageNo+"&pageSize="+this.pageSize;
-				// #endif
+
 				uni.request({
 				    url: url,
 				    success: (res) => {
@@ -194,19 +182,13 @@
 			chazhao(){
 				let url ;
 				if(this.searchText=='' || this.searchText==null){
-					// #ifdef APP-PLUS
+					
 					url = this.baseUrl+'/huiyuan/by/'+this.yuangongid+"?pageNo=1&pageSize="+this.pageSize;
-					// #endif
-					// #ifdef MP-WEIXIN
-					url = this.baseUrl+'/huiyuan/wechat/'+this.openId+"?pageNo=1&pageSize="+this.pageSize;
-					// #endif
+					
 				}else{
-					// #ifdef APP-PLUS
+					
 					url = this.baseUrl+'/huiyuan/search/'+this.yuangongid+"?searchText="+this.searchText;
-					// #endif
-					// #ifdef MP-WEIXIN
-					url = this.baseUrl+'/huiyuan/wechat/'+this.openId+"/search?searchText="+this.searchText;
-					// #endif
+					
 				}
 		
 				uni.request({
@@ -244,11 +226,9 @@
 			},
 			// 跳转到会员详情页,携带会员信息
 			toHuiyuanDetails(huiyuan){
+				uni.setStorageSync("huiyuanid",huiyuan.id);
 				uni.navigateTo({
-					url: './details/huiyuandetails',
-					success: function(res) {
-						uni.setStorageSync("huiyuanid",huiyuan.id);
-					}
+					url: './details/huiyuandetails'
 				});
 			}
 			

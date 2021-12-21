@@ -97,6 +97,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  if (!_vm._isMounted) {
+    _vm.e0 = function($event) {
+      _vm.showPicker = true
+    }
+  }
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -130,105 +135,92 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var MxDatePicker = function MxDatePicker() {__webpack_require__.e(/*! require.ensure | components/mx-datepicker/mx-datepicker */ "components/mx-datepicker/mx-datepicker").then((function () {return resolve(__webpack_require__(/*! ../../../components/mx-datepicker/mx-datepicker.vue */ 52));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 {
+  components: {
+    MxDatePicker: MxDatePicker },
+
   data: function data() {
     var baseUrl = getApp().globalData.baseUrl;
     return {
       baseUrl: baseUrl,
       id: '',
       name: '',
-      gender: 0,
       birthday: '',
-      yuangongid: '',
       phone: '',
       remarks: '',
       zhiye: '',
-      openId: '',
-      address: '' };
+      address: '',
+      showPicker: false };
 
   },
 
@@ -243,59 +235,34 @@ var _default =
     eventChannel.on('acceptDataFromOpenerPage', function (data) {
       _this.id = data.id;
       _this.name = data.name;
-      _this.gender = data.gender;
       _this.birthday = data.birthday;
       _this.phone = data.phone;
       _this.remarks = data.remarks;
       _this.zhiye = data.zhiye;
-
-
-
-
-      _this.openId = data.openId;
-
       _this.address = data.address;
-
     });
   },
 
-  onShow: function onShow() {
-
-  },
-
-  computed: {
-    startDate: function startDate() {
-      return this.getDate('start');
-    },
-    endDate: function endDate() {
-      return this.getDate('end');
-    } },
-
+  onShow: function onShow() {},
 
   methods: {
+
+    onSelected: function onSelected(e) {//选择
+      this.showPicker = false;
+      if (e) {var
+        value = e.value;
+        this.birthday = value.replace(/\//g, "-");
+      }
+    },
     /**
-              * 验证是否为手机号码（移动手机）
-              */
+        * 验证是否为手机号码（移动手机）
+        */
     isMobilePhone: function isMobilePhone(source) {
       var regex = /^[1][3,4,5,7,8][0-9]{9}$/;
       return regex.test(source);
     },
     // 添加会员
-    addHuiyuan: function addHuiyuan() {
-
-      if (this.openId == null || this.openId == '') {
-
-        uni.switchTab({
-          url: '../../logon/logon',
-          success: function success() {
-            uni.showToast({
-              title: "您还没有登录",
-              icon: 'none' });
-
-          } });
-
-        return;
-      }
+    addHuiyuan: function addHuiyuan() {var _this2 = this;
 
       // 电话号码不能为空
       if (this.phone == null || this.phone == '') {
@@ -325,7 +292,6 @@ var _default =
 
         return;
       }
-
       // 职业不能为空
       if (this.zhiye == null || this.zhiye == '') {
         uni.showToast({
@@ -335,31 +301,33 @@ var _default =
 
         return;
       }
+      uni.showLoading({
+        title: '上传中' });
 
       var huiyuan = {
         id: this.id,
         name: this.name,
-        gender: this.gender,
         birthday: this.birthday,
         phone: this.phone,
-        yuangongid: this.yuangongid,
         remarks: this.remarks,
         zhiye: this.zhiye,
-        openId: this.openId,
         address: this.address };
-
 
       uni.request({
         url: this.baseUrl + '/huiyuan/addHuiyuan',
         method: 'POST',
         data: huiyuan,
-        success: function success(res) {var
-          status = res.data.status;var
-          message = res.data.message;
+        success: function success(res) {var _res$data =
+          res.data,status = _res$data.status,message = _res$data.message;
           if (status == 200) {
-            uni.showLoading({
-              title: '上传中' });
+            _this2.name = '';
+            _this2.phone = '';
+            var currentDate = _this2.getDate({
+              format: true });
 
+            _this2.birthday = currentDate;
+            _this2.remarks = '';
+            _this2.address = '';
             uni.navigateBack();
           } else {
             uni.showToast({
@@ -368,7 +336,7 @@ var _default =
               icon: 'none' });
 
           }
-
+          uni.hideLoading();
         } });
 
 
@@ -384,25 +352,11 @@ var _default =
       value = e.detail.value;
       this.phone = value.replace(/\s/g, "");
     },
-    // 区分男女
-    getGender: function getGender(e) {
-
-      this.gender = e.detail.value;
-
-      // let {value} = e.detail;
-      // if(value == 1){
-      // 	this.gender = '男';
-      // }
-      // if(value == 0){
-      // 	this.gender = '女';
-      // }
-    },
     // 获取姓名
     getname: function getname(e) {var
       value = e.detail.value;
       this.name = value.replace(/\s/g, "");
     },
-
     getzhiye: function getzhiye(e) {var
       value = e.detail.value;
       this.zhiye = value.replace(/\s/g, "");
@@ -412,17 +366,11 @@ var _default =
       value = e.detail.value;
       this.address = value.replace(/\s/g, "");
     },
-    bindDateChange: function bindDateChange(e) {
-      this.birthday = e.target.value;
-    },
-
     getDate: function getDate(type) {
-
       var date = new Date();
       var year = date.getFullYear();
       var month = date.getMonth() + 1;
       var day = date.getDate();
-
       if (type === 'start') {
         year = year - 60;
       } else if (type === 'end') {
@@ -431,7 +379,6 @@ var _default =
       month = month > 9 ? month : '0' + month;
       day = day > 9 ? day : '0' + day;
       return "".concat(year, "-").concat(month, "-").concat(day);
-
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

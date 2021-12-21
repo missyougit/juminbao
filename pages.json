@@ -1,12 +1,12 @@
 {
 	"pages": [
-		{
-			"path": "pages/tabs/huiyuan_list",
-			"style": {
-				"navigationBarTitleText": "会员列表",
-				"enablePullDownRefresh": true
-			}
-		},
+		// {
+		// 	"path": "pages/new_file",
+		// 	"style": {
+		// 		"navigationBarTitleText": "",
+		// 		"navigationBarBackgroundColor": "#F8F8F8"
+		// 	}
+		// },
 		{
 			"path": "pages/logon/logon",
 			"style": {
@@ -14,6 +14,20 @@
 				"navigationBarBackgroundColor": "#F8F8F8"
 			}
 		},
+		{
+			"path": "pages/tabs/huiyuan_list",
+			"style": {
+				"navigationBarTitleText": "会员列表",
+				"enablePullDownRefresh": true
+			}
+		},
+		// {
+		// 	"path": "pages/logon/logon",
+		// 	"style": {
+		// 		"navigationBarTitleText": "",
+		// 		"navigationBarBackgroundColor": "#F8F8F8"
+		// 	}
+		// },
 		{
 			"path": "pages/tabs/add_huiyuan",
 			"style": {

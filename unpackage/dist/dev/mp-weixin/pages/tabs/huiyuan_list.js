@@ -188,13 +188,8 @@ var _default =
 
   onLoad: function onLoad(option) {var _this = this;
 
-
-
-
-
-    this.openId = uni.getStorageSync("openId");
-    var url = this.baseUrl + '/huiyuan/wechat/' + this.openId + "?pageNo=1&pageSize=" + this.pageSize;
-
+    this.yuangongid = uni.getStorageSync("yuangongid");
+    var url = this.baseUrl + '/huiyuan/by/' + this.yuangongid + "?pageNo=1&pageSize=" + this.pageSize;
 
     uni.request({
       url: url,
@@ -216,58 +211,54 @@ var _default =
 
   },
 
-  onShow: function onShow() {var _this2 = this;
+  onShow: function onShow() {
+    // if(this.huiyuan_list==null || this.huiyuan_list=='' || this.huiyuan_list.length==0){
 
-    if (this.huiyuan_list == null || this.huiyuan_list == '' || this.huiyuan_list.length == 0) {
-
-
-
+    // 	//
 
 
 
-      this.openId = uni.getStorageSync("openId");
-      var url = this.baseUrl + '/huiyuan/wechat/' + this.openId + "?pageNo=1&pageSize=" + this.pageSize;
+    // 	//
+    // 	// this.openId = uni.getStorageSync("openId");
+    // 	// let url = this.baseUrl+'/huiyuan/wechat/'+this.openId+"?pageNo=1&pageSize="+this.pageSize;
+    // 	//
 
+    // 	uni.request({
+    // 	    url: url,
+    // 	    success: (res) => {
+    // 			console.log("res=>",res)
+    // 			let {status,message,result} = res.data;
+    // 			if(status==200){
+    // 				this.huiyuan_list = result.huiyuanList;
+    // 				this.pageCount = result.pageCount;
+    // 				this.total = result.total;
+    // 			}else{
+    // 				uni.showToast({
+    // 				    title: message,
+    // 				    duration: 1000,
+    // 					icon: 'none'
+    // 				});
+    // 			}
+    // 	    }
+    // 	});
 
-      uni.request({
-        url: url,
-        success: function success(res) {
-          console.log("res=>", res);var _res$data2 =
-          res.data,status = _res$data2.status,message = _res$data2.message,result = _res$data2.result;
-          if (status == 200) {
-            _this2.huiyuan_list = result.huiyuanList;
-            _this2.pageCount = result.pageCount;
-            _this2.total = result.total;
-          } else {
-            uni.showToast({
-              title: message,
-              duration: 1000,
-              icon: 'none' });
-
-          }
-        } });
-
-
-    }
+    // }
 
   },
 
-  onPullDownRefresh: function onPullDownRefresh() {var _this3 = this;
+  onPullDownRefresh: function onPullDownRefresh() {var _this2 = this;
 
-
-
-
-    var url = this.baseUrl + '/huiyuan/wechat/' + this.openId + "?pageNo=1&pageSize=" + this.pageSize;
+    var url = this.baseUrl + '/huiyuan/by/' + this.yuangongid + "?pageNo=1&pageSize=" + this.pageSize;
 
     uni.request({
       url: url,
-      success: function success(res) {var _res$data3 =
-        res.data,status = _res$data3.status,message = _res$data3.message,result = _res$data3.result;
+      success: function success(res) {var _res$data2 =
+        res.data,status = _res$data2.status,message = _res$data2.message,result = _res$data2.result;
         if (status == 200) {
-          _this3.huiyuan_list = result.huiyuanList;
-          _this3.pageCount = result.pageCount;
-          _this3.total = result.total;
-          _this3.pageNo = 2;
+          _this2.huiyuan_list = result.huiyuanList;
+          _this2.pageCount = result.pageCount;
+          _this2.total = result.total;
+          _this2.pageNo = 2;
         } else {
           uni.showToast({
             title: message,
@@ -280,23 +271,20 @@ var _default =
 
   },
 
-  onReachBottom: function onReachBottom() {var _this4 = this;
+  onReachBottom: function onReachBottom() {var _this3 = this;
     if (this.pageNo <= this.pageCount) {
 
-
-
-
-      var url = this.baseUrl + '/huiyuan/wechat/' + this.openId + "?pageNo=" + this.pageNo + "&pageSize=" + this.pageSize;
+      var url = this.baseUrl + '/huiyuan/by/' + this.yuangongid + "?pageNo=" + this.pageNo + "&pageSize=" + this.pageSize;
 
       uni.request({
         url: url,
-        success: function success(res) {var _res$data4 =
-          res.data,status = _res$data4.status,message = _res$data4.message,result = _res$data4.result;
+        success: function success(res) {var _res$data3 =
+          res.data,status = _res$data3.status,message = _res$data3.message,result = _res$data3.result;
           if (status == 200) {
-            _this4.huiyuan_list = [].concat(_toConsumableArray(_this4.huiyuan_list), _toConsumableArray(result.huiyuanList));
-            _this4.pageCount = result.pageCount;
-            _this4.total = result.total;
-            _this4.pageNo++;
+            _this3.huiyuan_list = [].concat(_toConsumableArray(_this3.huiyuan_list), _toConsumableArray(result.huiyuanList));
+            _this3.pageCount = result.pageCount;
+            _this3.total = result.total;
+            _this3.pageNo++;
           } else {
             uni.showToast({
               title: message,
@@ -323,44 +311,38 @@ var _default =
   },
   methods: {
 
-    chazhao: function chazhao() {var _this5 = this;
+    chazhao: function chazhao() {var _this4 = this;
       var url;
       if (this.searchText == '' || this.searchText == null) {
 
-
-
-
-        url = this.baseUrl + '/huiyuan/wechat/' + this.openId + "?pageNo=1&pageSize=" + this.pageSize;
+        url = this.baseUrl + '/huiyuan/by/' + this.yuangongid + "?pageNo=1&pageSize=" + this.pageSize;
 
       } else {
 
-
-
-
-        url = this.baseUrl + '/huiyuan/wechat/' + this.openId + "/search?searchText=" + this.searchText;
+        url = this.baseUrl + '/huiyuan/search/' + this.yuangongid + "?searchText=" + this.searchText;
 
       }
 
       uni.request({
         url: url,
-        success: function success(res) {var _res$data5 =
-          res.data,status = _res$data5.status,message = _res$data5.message,result = _res$data5.result;
+        success: function success(res) {var _res$data4 =
+          res.data,status = _res$data4.status,message = _res$data4.message,result = _res$data4.result;
           if (status == 200) {
-            _this5.huiyuan_list = result.huiyuanList;
-            if (_this5.searchText == '' || _this5.searchText == null) {
-              _this5.pageCount = result.pageCount;
-              _this5.total = result.total;
-              _this5.pageNo = 2;
+            _this4.huiyuan_list = result.huiyuanList;
+            if (_this4.searchText == '' || _this4.searchText == null) {
+              _this4.pageCount = result.pageCount;
+              _this4.total = result.total;
+              _this4.pageNo = 2;
             }
           } else {
-            _this5.huiyuan_list = [];
+            _this4.huiyuan_list = [];
             uni.showToast({
               title: message,
               duration: 1000,
               icon: 'none' });
 
           }
-          _this5.searchText = '';
+          _this4.searchText = '';
         } });
 
     },
@@ -376,11 +358,9 @@ var _default =
     },
     // 跳转到会员详情页,携带会员信息
     toHuiyuanDetails: function toHuiyuanDetails(huiyuan) {
+      uni.setStorageSync("huiyuanid", huiyuan.id);
       uni.navigateTo({
-        url: './details/huiyuandetails',
-        success: function success(res) {
-          uni.setStorageSync("huiyuanid", huiyuan.id);
-        } });
+        url: './details/huiyuandetails' });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

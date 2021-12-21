@@ -12,21 +12,6 @@
 		</view>
 		<view class="bianhao">
 			<view class="bianhao_key">
-				<text>性别:</text>
-			</view>
-			<view class="bianhao_value">
-				<radio-group name="xingbie" @change="getGender">
-					<label>
-						<radio :value="0" :checked="gender==0" color="#FF83FA"/><text>男</text>
-					</label>
-					<label>
-						<radio :value="1" :checked="gender==1" color="#FF83FA"/><text>女</text>
-					</label>
-				</radio-group>
-			</view>
-		</view>
-		<view class="bianhao">
-			<view class="bianhao_key">
 				<text>职业:</text>
 			</view>
 			<view class="bianhao_value">
@@ -38,9 +23,8 @@
 				<text>生日:</text>
 			</view>
 			<view class="bianhao_value">
-				<picker mode="date" :value="birthday" :start="startDate" :end="endDate" @change="bindDateChange">
-				    <view class="uni-input">{{birthday}}</view>
-				</picker>
+				<view @click="showPicker = true">{{birthday}}</view>
+				<mx-date-picker :show="showPicker" type="date" :value="birthday" :show-tips="true" @confirm="onSelected" @cancel="onSelected" />
 			</view>
 		</view>
 		<view class="bianhao">
@@ -82,21 +66,24 @@
 
 <script>
 	
+	import MxDatePicker from "../../../components/mx-datepicker/mx-datepicker.vue";
+	
 	export default {
+		components: {
+			MxDatePicker
+		},
 		data() {
 			const baseUrl = getApp().globalData.baseUrl;
 			return {
 				baseUrl: baseUrl,
 				id: '',
 				name: '',
-				gender: 0,
 				birthday: '',
-				yuangongid: '',
 				phone: '',
 				remarks: '',
 				zhiye: '',
-				openId: '',
-				address: ''
+				address: '',
+				showPicker: false
 			}
 		},
 		
@@ -111,36 +98,25 @@
 			eventChannel.on('acceptDataFromOpenerPage', (data) => {
 				this.id = data.id;
 				this.name = data.name;
-				this.gender = data.gender;
 				this.birthday = data.birthday;
 				this.phone = data.phone;
 				this.remarks = data.remarks;
 				this.zhiye = data.zhiye;
-				// #ifdef APP-PLUS
-				this.yuangongid = data.yuangongid;
-				// #endif
-				// #ifdef MP-WEIXIN
-				this.openId = data.openId;
-				// #endif
 				this.address = data.address;
-
 			})
 		},
 		
-		onShow() {
-			
-		},
-		
-		computed: {
-		    startDate() {
-		        return this.getDate('start');
-		    },
-		    endDate() {
-		        return this.getDate('end');
-		    }
-		},
+		onShow() {},
 		
 		methods: {
+			
+			onSelected(e) {//选择
+				this.showPicker = false;
+				if(e){
+					let {value} = e;
+					this.birthday = value.replace(/\//g,"-");
+				}
+			},
 			/**
 			 * 验证是否为手机号码（移动手机）
 			 */
@@ -150,20 +126,6 @@
 			},
 			// 添加会员
 			addHuiyuan(){
-				
-				if(this.openId==null || this.openId==''){
-					
-					uni.switchTab({
-						url: '../../logon/logon',
-						success: () => {
-							uni.showToast({
-							    title: "您还没有登录",
-								icon: 'none'
-							});
-						}
-					});
-					return;
-				}
 				
 				// 电话号码不能为空
 				if(this.phone==null || this.phone==''){
@@ -193,7 +155,6 @@
 					});
 					return;
 				}
-				
 				// 职业不能为空
 				if(this.zhiye==null || this.zhiye==''){
 					uni.showToast({
@@ -203,31 +164,33 @@
 					});
 					return;
 				}
-				
+				uni.showLoading({
+				    title: '上传中'
+				});
 				let huiyuan = {
 					id:this.id,
 					name:this.name,
-					gender:this.gender,
 					birthday:this.birthday,
 					phone:this.phone,
-					yuangongid:this.yuangongid,
 					remarks:this.remarks,
 					zhiye:this.zhiye,
-					openId:this.openId,
 					address:this.address
 				};
-				
 				uni.request({
 				    url: this.baseUrl+'/huiyuan/addHuiyuan',
 					method: 'POST',
 					data: huiyuan,
 				    success: (res) => {
-						let {status} = res.data;
-						let {message} = res.data;
+						let {status,message} = res.data;
 						if(status==200){
-							uni.showLoading({
-							    title: '上传中'
-							});
+							this.name = '';
+							this.phone = '';
+							const currentDate = this.getDate({
+							    format: true
+							})
+							this.birthday = currentDate;
+							this.remarks = '';
+							this.address = '';
 							uni.navigateBack();
 						}else{
 							uni.showToast({
@@ -236,7 +199,7 @@
 								icon: 'none'
 							});
 						}
-						
+						uni.hideLoading();
 				    }
 				});
 				
@@ -252,25 +215,11 @@
 				let {value} = e.detail;
 				this.phone = value.replace(/\s/g,"");
 			},
-			// 区分男女
-			getGender(e){
-				
-				this.gender = e.detail.value;
-				
-				// let {value} = e.detail;
-				// if(value == 1){
-				// 	this.gender = '男';
-				// }
-				// if(value == 0){
-				// 	this.gender = '女';
-				// }
-			},
 			// 获取姓名
 			getname(e){
 				let {value} = e.detail;
 				this.name = value.replace(/\s/g,"");
 			},
-			
 			getzhiye(e){
 				let {value} = e.detail;
 				this.zhiye = value.replace(/\s/g,"");
@@ -280,17 +229,11 @@
 				let {value} = e.detail;
 				this.address = value.replace(/\s/g,"");
 			},
-			bindDateChange: function(e) {
-			    this.birthday = e.target.value
-			},
-			
 			getDate(type) {
-				
 			    const date = new Date();
 			    let year = date.getFullYear();
 			    let month = date.getMonth() + 1;
 			    let day = date.getDate();
-			
 			    if (type === 'start') {
 			        year = year - 60;
 			    } else if (type === 'end') {
@@ -299,9 +242,7 @@
 			    month = month > 9 ? month : '0' + month;
 			    day = day > 9 ? day : '0' + day;
 			    return `${year}-${month}-${day}`;
-				
 			}
-					
 		}
 	}
 	

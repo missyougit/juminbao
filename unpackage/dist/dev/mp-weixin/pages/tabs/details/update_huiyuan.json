@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "修改会员信息",
-  "usingComponents": {}
+  "usingComponents": {
+    "mx-date-picker": "/components/mx-datepicker/mx-datepicker"
+  }
 }

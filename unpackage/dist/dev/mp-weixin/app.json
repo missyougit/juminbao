@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/tabs/huiyuan_list",
     "pages/logon/logon",
+    "pages/tabs/huiyuan_list",
     "pages/tabs/add_huiyuan",
     "pages/tabs/details/huiyuandetails",
     "pages/tabs/details/update_huiyuan"

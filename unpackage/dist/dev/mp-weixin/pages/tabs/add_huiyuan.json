@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "添加会员",
-  "usingComponents": {}
+  "usingComponents": {
+    "mx-date-picker": "/components/mx-datepicker/mx-datepicker"
+  }
 }

@@ -223,6 +223,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -240,8 +248,6 @@ var _default =
   onLoad: function onLoad(option) {},
 
   onShow: function onShow() {var _this = this;
-
-
     var huiyuanid = uni.getStorageSync("huiyuanid");
     this.huiyuanid = parseInt(huiyuanid);
     // 通过huiyuanid查询会员信息
@@ -250,7 +256,6 @@ var _default =
       success: function success(res) {
         _this.huiyuan = res.data.result.huiyuan;
       } });
-
 
   },
 
@@ -276,7 +281,6 @@ var _default =
         summary: "我的新会员\n姓名:" + this.huiyuan.name + "\n电话:" + this.huiyuan.phone });
 
     },
-
     updateHuiyuan: function updateHuiyuan() {var _this2 = this;
       uni.navigateTo({
         url: './update_huiyuan',

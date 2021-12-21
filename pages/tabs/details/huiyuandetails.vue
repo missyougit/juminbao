@@ -62,6 +62,14 @@
 		</view>
 		<view class="bianhao">
 			<view class="bianhao_key">
+				<text>时间:</text>
+			</view>
+			<view class="bianhao_value">
+				<text>{{huiyuan.entrytime}}</text>
+			</view>
+		</view>
+		<view class="bianhao">
+			<view class="bianhao_key">
 				<text>地址:</text>
 			</view>
 			<view class="bianhao_value">
@@ -108,8 +116,6 @@
 		onLoad(option) {},
 		
 		onShow() {
-			
-
 			let huiyuanid = uni.getStorageSync("huiyuanid");
 			this.huiyuanid =  parseInt(huiyuanid);
 			// 通过huiyuanid查询会员信息
@@ -119,7 +125,6 @@
 					this.huiyuan = res.data.result.huiyuan;
 			    }
 			});
-			
 		},
 		
 		onShareAppMessage(res) {
@@ -144,7 +149,6 @@
 				    summary: "我的新会员\n姓名:"+this.huiyuan.name+"\n电话:"+this.huiyuan.phone
 				});
 			},
-			
 			updateHuiyuan(){
 				uni.navigateTo({
 					url: './update_huiyuan',
